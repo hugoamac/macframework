@@ -1,0 +1,42 @@
+/* 
+    Document   : style
+    Created on : 01/12/2012, 21:58:45
+    Author     : hugo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    
+    background: silver;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+
+}
+#header{
+
+    width: 960px;
+    height: 70px;
+    margin: 20px auto 0px auto;
+    background: greenyellow;
+}
+#content{
+    width: 940px;
+    margin: 0px auto;
+    padding: 10px;
+    min-height: 800px;
+    background: #ffffff;
+
+}
+#footer{
+    width: 100%;
+    padding: 25px 0px;
+    background: black;
+    color: #ffffff;
+    text-align: center;
+
+}

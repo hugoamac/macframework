@@ -7,9 +7,9 @@ class NoticiaController extends Controller {
         $model = new Noticia();
         $noticia = $model->listar();
 
-        //$this->view->noticia = $noticia;
+        $this->view->noticia = $noticia;
 
-        //$this->view->render("noticia/index");
+        $this->view->render("noticia/index");
     }
 
 }

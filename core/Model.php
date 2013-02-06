@@ -54,11 +54,55 @@ class Model extends Database {
         
     }
 
-    public function findAll(array $where, $operator = array(), $order = null, $limit = null) {
+    public function findAll($where=array(), $operator = array(),$order = null, $limit = null) {
+
+        if(count($where)>0)
+        {
+            $where = " WHERE " . $this->buildWhere($where,$operator);
+            $bindWhere = $this->getBindWhere();
+
+        }else
+        {
+            $where = null;
+        }
+        if($order!=null)
+        {
+
+            $order = " ORDER BY " . $order;
+        }
+        if($limit!=null)
+        {
+            $limit = " LIMIT " . $limit;
+        }
+
+        $sql = "SELECT * FROM `{$this->_table}` {$where} {$order} {$limit}";        
+        $stm = $this->prepare($sql);
+        $stm->execute($bindWhere);
+
+        return $stm->fetchAll(PDO::FETCH_OBJ);
         
     }
 
-    public function delete(array $where, array $operator = array()) {
+    public function delete(array $where = array(), array $operator = array()) {
+
+        if(count($where)>0)
+        {
+
+            $where = " WHERE " . $this->buildWhere($where,$operator);
+            $bindWhere = $this->getBindWhere();
+        }else
+        {
+
+            $where = null;
+        }
+        
+
+        $sql = "DELETE FROM `{$this->_table}` {$where}";
+        $stm = $this->prepare($sql);
+        $stm->execute($bindWhere);
+
+        return $stm->rowCount();
+
         
     }  
 

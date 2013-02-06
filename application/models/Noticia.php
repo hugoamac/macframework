@@ -2,33 +2,30 @@
 
 class Noticia extends Model {
 
-    protected $_table = "usu_usuario";
+    protected $_table = "not_noticia";
 
-    public function listar() {
+    public function listar() 
+    {
+        return  $this->findAll();
+    }
+    public function busca($id)
+    {
+        return $this->find(array('id'=>(int)$id));
+    }
+    public function salvar(array $data)
+    {
 
-        $data = array(
-                        
-            'id_grupo'=>2,
-            'nome'=>'topanga_peidona',
-            'login'=>'topanga',
-            'email'=>'topanga@live.com',
-            'senha'=>'teste3'
-        );
+        if(isset($data['id']) && !empty($data['id']))
+        {
+            $id = (int)$data['id'];
+            return $this->update($data,array('id'=>$id));
+        }
 
-        $where = array(
-            
-            'id'=>26,
-
-
-  
-        );
-        $operator = array();
-
-       var_dump($this->find($where,array()));
-     
-        
-
-
+        return $this->insert($data);
+    }
+    public function exclui($id)
+    {
+        return $this->delete(array('id'=>(int)$id));
     }
 
 }

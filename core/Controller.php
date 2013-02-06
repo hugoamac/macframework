@@ -21,6 +21,7 @@ class Controller {
 
         return $this->_post;
     }
+
     private function setParams()
     {
 
@@ -29,6 +30,7 @@ class Controller {
         return $Bootstrap->getParams();
 
     }
+
 
 }
 

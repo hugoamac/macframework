@@ -6,7 +6,6 @@ class Noticia extends Model {
 
     public function listar() {
 
-
         $data = array(
                         
             'id_grupo'=>2,
@@ -28,6 +27,8 @@ class Noticia extends Model {
        var_dump($this->find($where,array()));
      
         
+
+
     }
 
 }

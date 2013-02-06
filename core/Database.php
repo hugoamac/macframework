@@ -25,6 +25,7 @@ class Database extends PDO {
                 print '<pre>';
                 print $e->getMessage();
                 die();
+
         }
     }
 

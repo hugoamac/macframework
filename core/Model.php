@@ -22,11 +22,11 @@ class Model extends Database {
         $stm->execute($bindSet);
 
         return $this->lastInsertId();
+
         
     }
 
     public function update(array $data, $where) {
-
         $set = $this->buildSet($data);
         $bindSet = $this->getBindWhereSet();
         $where = $this->buildWhere($where);
@@ -70,6 +70,7 @@ class Model extends Database {
     public function getBindWhereSet(){
 
         return $this->_bind_set;
+
     }
 
     private function _getCols() {

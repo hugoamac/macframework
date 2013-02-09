@@ -21,7 +21,7 @@ class Bootstrap {
     private function setUrl() {
 
         if (isset($_SERVER["REQUEST_URI"]) && strlen($_SERVER["REQUEST_URI"]) != 1) {
-            $this->_url =   filter_var(trim($_SERVER["REQUEST_URI"], "/"),FILTER_SANITIZE_STRING);
+            $this->_url = filter_var(trim($_SERVER["REQUEST_URI"], "/"), FILTER_SANITIZE_STRING);
         } else {
             $this->_url = "index/index";
         }

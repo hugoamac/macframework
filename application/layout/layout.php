@@ -6,10 +6,14 @@
         <link href="<?= $this->baseUrl() ?>css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div id="header">header</div>
+        <div id="header">
+            
+        </div>
         <div id="content">
             <?= $this->content(); ?>
         </div>
-        <div id="footer">footer</div>
+        <div id="footer">
+            
+        </div>
     </body>
 </html>

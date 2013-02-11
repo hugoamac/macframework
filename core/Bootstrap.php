@@ -77,8 +77,12 @@ class Bootstrap {
 
     private function setParams() {
 
-        if (is_array($this->getPieceUrl()) && count($this->getPieceUrl()) >= 3) {
+        if (is_array($this->getPieceUrl()) && count($this->getPieceUrl()) >= 0) {
             $piece_url = $this->getPieceUrl();
+
+            $this->_params['controller'] = $piece_url[0];
+            $this->_params['action'] = $piece_url[1];
+
             unset($piece_url[0], $piece_url[1]);
             foreach ($piece_url as $key => $val) {
                 if ($key % 2 == 0) {
@@ -87,14 +91,14 @@ class Bootstrap {
                     $impar[] = $val;
                 }
             }
-
-            if (count($par) == count($impar)) {
-                $params = array_combine($par, $impar);
-            } else {
-                $params = array();
+            if (isset($par) && isset($impar)) {
+                foreach ($par as $key => $val) {
+                    if (key_exists($key, $impar)) {
+                        $this->_params[$val] = $impar[$key];
+                    }
+                }
             }
         }
-        $this->_params = $params;
     }
 
     public function getParams($name = NULL) {
@@ -108,20 +112,7 @@ class Bootstrap {
 
     private function load() {
 
-        function __autoload($class) {
-
-            if (file_exists(CORE_PATH . "/{$class}.php")) {
-                require_once CORE_PATH . "/{$class}.php";
-            } elseif (file_exists(APPLICATION_PATH . "/models/{$class}.php")) {
-                require_once APPLICATION_PATH . "/models/{$class}.php";
-            } elseif (file_exists(APPLICATION_PATH . "/helpers/{$class}.php")) {
-                require_once APPLICATION_PATH . "/helpers/{$class}.php";
-            } else {
-
-                die("A classe {$class} não foi encontrada!");
-            }
-        }
-
+        spl_autoload_register('Bootstrap::myautoloader');
     }
 
     public function run() {
@@ -130,6 +121,7 @@ class Bootstrap {
             require_once APPLICATION_PATH . "/controllers/{$this->getController()}Controller.php";
             $controller_name = $this->getController() . "Controller";
             $controller = new $controller_name();
+
             if (is_object($controller)) {
                 $action_name = $this->getAction() . "Action";
                 if (method_exists($controller, $action_name)) {
@@ -145,6 +137,35 @@ class Bootstrap {
         } else {
 
             die("A página que você solicitou não existe !");
+        }
+    }
+
+    private function myautoloader($class) {
+
+        require_once APPLICATION_PATH . "/config/config.php";
+
+        if (isset($config['library']) && !empty($config['library'])) {
+
+            $folderlibrary = true;
+            $library = $config['library'];
+        }
+
+        if (file_exists(CORE_PATH . "/{$class}.php")) {
+            return require_once CORE_PATH . "/{$class}.php";
+        } elseif (file_exists(APPLICATION_PATH . "/models/{$class}.php")) {
+            return require_once APPLICATION_PATH . "/models/{$class}.php";
+        } elseif (file_exists(APPLICATION_PATH . "/helpers/{$class}.php")) {
+            return require_once APPLICATION_PATH . "/helpers/{$class}.php";
+        } elseif ($folderlibrary) {
+            foreach ($library as $pasta) {
+
+                if (file_exists(APPLICATION_PATH . "/library/{$pasta}/{$class}.php")) {
+                    return require_once APPLICATION_PATH . "/library/{$pasta}/{$class}.php";
+                }
+            }
+        } else {
+
+            die("A classe {$class} não foi encontrada!");
         }
     }
 

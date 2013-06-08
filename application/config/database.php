@@ -5,4 +5,4 @@ $database["type"] = "mysql";
 $database["host"] = "localhost";
 $database["user"] = "root";
 $database["name"] = "paulo";
-$database["pass"] = "lordswxp";
+$database["pass"] = "";
